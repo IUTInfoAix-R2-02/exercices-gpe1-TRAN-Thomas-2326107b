@@ -69,14 +69,14 @@ public class Palette extends Application {
             panneau.setStyle("-fx-background-color: rgb("+rouge+","+vert+","+bleu+")");
         });
 
-        rougeBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, vertEvent -> {
+        rougeBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, rougeEvent -> {
             rouge += 10;
             nbRouge+=1;
             label.setText("Rouge cliqué " + nbRouge + " fois");
             panneau.setStyle("-fx-background-color: rgb("+rouge+","+vert+","+bleu+")");
         });
 
-        bleuBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, vertEvent -> {
+        bleuBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, bleuEvent -> {
             bleu += 10;
             nbBleu+=1;
             label.setText("Bleu cliqué " + nbBleu + " fois");
