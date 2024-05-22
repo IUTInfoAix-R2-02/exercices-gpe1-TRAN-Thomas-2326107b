@@ -21,37 +21,33 @@ public class Animation extends Application {
         TranslateTransition transition1 = new TranslateTransition(duration, customButton);
         transition1.setByX(150);
         transition1.setByY(-150);
-        transition1.setAutoReverse(true);
-        transition1.setCycleCount(2);
+        transition1.setCycleCount(1);
 
         TranslateTransition transition2 = new TranslateTransition(duration, customButton);
         transition2.setByX(0);
         transition2.setByY(300);
-        transition2.setAutoReverse(true);
-        transition2.setCycleCount(2);
+        transition2.setCycleCount(1);
 
         TranslateTransition transition3 = new TranslateTransition(duration, customButton);
         transition3.setByX(-300);
         transition3.setByY(0);
-        transition3.setAutoReverse(true);
-        transition3.setCycleCount(2);
+        transition3.setCycleCount(1);
 
         TranslateTransition transition4 = new TranslateTransition(duration, customButton);
         transition4.setByX(0);
         transition4.setByY(-300);
-        transition4.setAutoReverse(true);
-        transition4.setCycleCount(2);
+        transition4.setCycleCount(1);
 
         TranslateTransition transition5 = new TranslateTransition(duration, customButton);
         transition5.setByX(300);
         transition5.setByY(0);
-        transition5.setAutoReverse(true);
-        transition5.setCycleCount(2);
+        transition5.setCycleCount(1);
 
 
 
         SequentialTransition st = new SequentialTransition(transition1, transition2, transition3, transition4, transition5 );
-
+        st.setAutoReverse(true);
+        st.setCycleCount(2);
         customButton.setOnMousePressed(mouseEvent -> st.play());
 
         primaryStage.setTitle("Animation");
