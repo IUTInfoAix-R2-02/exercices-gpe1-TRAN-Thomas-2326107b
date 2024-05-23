@@ -1,6 +1,8 @@
-package fr.amu.iut.exercice2;
+package fr.amu.iut.exercice12;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -26,6 +28,7 @@ public class Palette extends Application {
 
     private CustomButton sourceOfEvent;
 
+    private ChangeListener<Number> nbClicsListener;
     private BorderPane root;
     private Pane panneau;
     private HBox boutons;
@@ -58,9 +61,34 @@ public class Palette extends Application {
         rouge = new CustomButton("Rouge", "#F21411");
         bleu = new CustomButton("Bleu", "#3273A4");
 
+        nbClicsListener = new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+                texteDuHaut.setText(sourceOfEvent.getText() + " cliqué " + newValue + " fois");
+                panneau.setStyle( "-fx-background-color:" + sourceOfEvent.getCouleur());
+
+                texteDuBas.setText(sourceOfEvent.getText() + " cliqué " + newValue + " fois");
+
+            }
+        };
+
         gestionnaireEvenement = (event) -> {
             sourceOfEvent = (CustomButton) event.getSource();
+            sourceOfEvent.nbClicsProperty().addListener(new ChangeListener<Number>() {
+                @Override
+                public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+                    texteDuHaut.setText(sourceOfEvent.getText() + " cliqué " + newValue + " fois");
+                    panneau.setStyle( "-fx-background-color:" + sourceOfEvent.getCouleur());
+
+                    texteDuBas.setText("La couleur " + sourceOfEvent.getText() + " est magnifique");
+                    texteDuBas.setStyle("-fx-text-fill:" + sourceOfEvent.getCouleur());
+                }
+            });
+            sourceOfEvent.setNbClics(sourceOfEvent.getNbClics() + 1);
         };
+
+
+
 
         vert.setOnAction(gestionnaireEvenement);
         rouge.setOnAction(gestionnaireEvenement);
@@ -70,7 +98,7 @@ public class Palette extends Application {
 
         root.setCenter(panneau);
         root.setTop(texteDuHaut);
-        root.setBottom(boutons);
+        root.setBottom(bas);
 
         Scene scene = new Scene(root);
 
