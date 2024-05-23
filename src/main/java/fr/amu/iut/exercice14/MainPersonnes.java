@@ -1,5 +1,7 @@
-package fr.amu.iut.exercice4;
+package fr.amu.iut.exercice14;
 
+import javafx.beans.Observable;
+import javafx.beans.binding.DoubleBinding;
 import javafx.beans.binding.IntegerBinding;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -18,11 +20,50 @@ public class MainPersonnes {
 
     public static void main(String[] args) {
 
-        lesPersonnes = new SimpleListProperty<>(FXCollections.observableArrayList());
+        lesPersonnes = new SimpleListProperty<>(FXCollections.observableArrayList(personne -> new Observable[]{personne.ageProperty(), personne.villeDeNaissanceProperty()}));
         ageMoyen = new SimpleIntegerProperty(0);
+        nbParisiens=new SimpleIntegerProperty(0);
 
-        question1();
-//        question2();
+       calculAgeMoyen = new IntegerBinding() {
+           {
+               this.bind(lesPersonnes);
+           }
+            @Override
+            protected int computeValue() {
+                int somme = 0;
+                for (int i = 0; i < lesPersonnes.getSize();++i){
+                    somme += lesPersonnes.get(i).ageProperty().get();
+                }
+                if (lesPersonnes.getSize()!= 0){
+                    return somme/lesPersonnes.getSize();
+                }
+                else{
+                    return 0;
+                }
+            }
+        };
+       ageMoyen.bind(calculAgeMoyen);
+
+       calculnbParisiens = new IntegerBinding() {
+           {
+               this.bind(lesPersonnes);
+           }
+           @Override
+           protected int computeValue() {
+               int somme = 0;
+               for (int i = 0; i<lesPersonnes.size();++i){
+                   if (lesPersonnes.get(i).villeDeNaissanceProperty().get() == "Paris"){
+                       ++somme;
+                       }
+                   }
+               return somme;
+           }
+       };
+
+       nbParisiens.bind(calculnbParisiens);
+
+       question1();
+       question2();
     }
 
     public static void question1() {
